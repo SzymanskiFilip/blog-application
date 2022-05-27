@@ -20,15 +20,18 @@ function LoginPage(){
                 border-2
                 border-black
                 rounded
+                items-center
+                justify-center
                 px-4
                 py-4
                 ">
                 <p className="text-center text-black text-2xl">Login</p>
                 {/*TODO: ADD INPUT STYLING TO CUSTOM CLASS! */}
-                <input type="text" className="outline-none border-black border" placeholder="Username"/>
-                <input type="password" />
-                <button>Login</button>
-                <p>Don't have an account? <br/> create one here!</p>
+                <input type="text" className="outline-none border-black border px-2" placeholder="Username"/>
+                <input type="password" className="outline-none border-black border px-2 my-2" placeholder="Password"/>
+                <button className="border-black border px-px rounded">Login</button>
+                <p className="text-center text-xs mt-2">Don't have an account?</p>
+                <p className="text-center text-xs hover:cursor-pointer hover:text-blue-500">Create one here</p>
                 </div>
             </div>
         </div>
