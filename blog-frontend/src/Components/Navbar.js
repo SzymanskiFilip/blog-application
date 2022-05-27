@@ -1,4 +1,4 @@
-function Navbar(){
+function Navbar({status}){
     return(
         <nav className="
             bg-stone-900 
@@ -14,7 +14,7 @@ function Navbar(){
             <p className="col-span-1 text-center">Blog It!</p>
             <div className="flex flex-row items-center justify-end">
                 <p className="mx-4">Write</p>
-                <p className="mx-4">Login</p>
+                <p className="mx-4">{status ? "LOGOUT" : "LOGIN"}</p>
             </div>
         </nav>
     )
