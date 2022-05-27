@@ -1,4 +1,11 @@
+import { useContext } from "react";
+import { AuthContext } from "../Util/AuthContext";
+
 function LoginPage(){
+
+    const context = useContext(AuthContext);
+    console.log(context);
+
     return(
         <div>
             <nav className="
