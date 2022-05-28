@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.post-bg-img{
+    @apply h-36 w-full;
+    object-fit: cover;
+}

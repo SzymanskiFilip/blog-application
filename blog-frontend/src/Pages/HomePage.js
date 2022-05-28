@@ -20,7 +20,10 @@ function HomePage(){
     return(
         <div>
             <Navbar status={context}/>
-            <Post data={dummyPost}/>
+            <div 
+            className="flex flex-col items-center justify-center my-10">
+                <Post data={dummyPost}/>
+            </div>
         </div>
     )
 }
