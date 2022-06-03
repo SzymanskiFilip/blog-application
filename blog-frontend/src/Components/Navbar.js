@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Navbar({status}){
     return(
         <nav className="
@@ -14,7 +16,7 @@ function Navbar({status}){
             text-2xl
             ">
             <p></p>
-            <p className="col-span-1 text-center mx-4">Blog It!</p>
+            <p className="col-span-1 text-center mx-4"><Link to={"/"}>Blog It!</Link></p>
             <div className="flex flex-row items-center justify-end">
                 <p className="mx-4">Write</p>
                 <p className="mx-4">{status ? "LOGOUT" : "LOGIN"}</p>
