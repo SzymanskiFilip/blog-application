@@ -12,14 +12,12 @@ function PostPage(){
     return(
         <div>
         <Navbar status={context}/>
-        <div className="flex flex-col items-center justify-cetner mt-4 mb-12">
-            <div className="w-screen sm:w-10/12 flex flex-col justify-between bg-gray-100 px-2 py-2 rounded">
-                <div>
-                    <img src={"https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"} alt="post banner"
-                    className="post-bg-img rounded"
-                    />
-                </div>
-            
+        <div className="flex flex-col items-center justify-cetner mb-12">
+        <img src={"https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80"} alt="post banner"
+        className="bg-img-full"
+        />
+            <div className="flex flex-col justify-between bg-gray-100 rounded">
+                 
                 <div className="mx-4">
                     <h1 className="text-2xl sm:text-5xl mt-2 mb-2">{"Why New York is beautiful"}</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam aperiam asperiores ipsam perferendis est, pariatur, quis non adipisci porro fugit voluptatum autem iure rem saepe amet aliquid! Impedit, eveniet modi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi praesentium nihil eveniet quis in impedit, expedita atque laborum odit harum nam aliquid rerum quia illum mollitia, quos est, dolorum tempora. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ipsum repellat optio obcaecati magnam cum quidem iste, nam, minima corrupti reprehenderit fugit placeat consequatur. Quaerat quod tenetur repellat vero qui?
