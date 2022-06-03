@@ -1,10 +1,20 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../Util/AuthContext";
 
 function LoginPage(){
 
     const context = useContext(AuthContext);
     console.log(context);
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+
+    function login(){
+        console.log(`username: ${username}, password: ${password}`);
+        context.setAuthenticated(true);
+    }
 
     return(
         <div>
@@ -17,7 +27,7 @@ function LoginPage(){
             items-center
             text-2xl
             ">
-            Blog It!
+            <Link to="/">Blog It!</Link>
             </nav>
 
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -34,9 +44,15 @@ function LoginPage(){
                 ">
                 <p className="text-center text-black text-2xl">Login</p>
                 {/*TODO: ADD INPUT STYLING TO CUSTOM CLASS! */}
-                <input type="text" className="outline-none border-black border px-2" placeholder="Username"/>
-                <input type="password" className="outline-none border-black border px-2 my-2" placeholder="Password"/>
-                <button className="border-black border px-px rounded">Login</button>
+                <input type="text" className="outline-none border-black border px-2" placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}/>
+
+                <input type="password" className="outline-none border-black border px-2 my-2" placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                />
+
+
+                <button className="border-black border px-px rounded" onClick={login}>Login</button>
                 <p className="text-center text-xs mt-2">Don't have an account?</p>
                 <p className="text-center text-xs hover:cursor-pointer hover:text-blue-500">Create one here</p>
                 </div>

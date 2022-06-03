@@ -6,7 +6,7 @@ function BlockAuth({children}){
     const context = useContext(AuthContext);
 
     return(
-        context ? <p>you are logged in</p> : children
+        context.authenticated ? <p>you are logged in</p> : children
     )
 }
 

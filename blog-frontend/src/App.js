@@ -10,11 +10,16 @@ function App() {
 
   const [authenticated, setAuthenticated] = useState(false);
 
+  const state = {
+    authenticated,
+    setAuthenticated
+  };
+
   return (
     <Routes>
       
       <Route path="/login" element={
-        <AuthContext.Provider value = {authenticated}>
+        <AuthContext.Provider value = {state}>
           <BlockAuth>
             <LoginPage />
           </BlockAuth>
@@ -22,13 +27,13 @@ function App() {
       }/>
 
       <Route path="/" element={
-        <AuthContext.Provider value={authenticated}>
+        <AuthContext.Provider value={state}>
           <HomePage />
         </AuthContext.Provider>
       }/>
 
       <Route path="/post/:id" element={
-        <AuthContext.Provider value={authenticated}>
+        <AuthContext.Provider value={state}>
           <PostPage />
         </AuthContext.Provider>
       }/>
