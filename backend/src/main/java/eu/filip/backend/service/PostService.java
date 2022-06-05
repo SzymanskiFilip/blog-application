@@ -1,9 +1,13 @@
 package eu.filip.backend.service;
 
 import eu.filip.backend.entity.Post;
+import eu.filip.backend.entity.PostPage;
 import eu.filip.backend.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +20,8 @@ import java.util.UUID;
 public class PostService {
     private final PostRepository postRepository;
 
-    public List<Post> findAllPosts(){
-        //Post post = new Post(1L, 1L, "hi", "body", UUID.randomUUID(), 12);
-        //List<Post> list = new ArrayList<>();
-        //list.add(post);
-        //return list;
-
-        return postRepository.findAll();
+    public Page<Post> getPosts(PostPage postPage){
+        Pageable pageable = PageRequest.of(postPage.getPageNumber(), postPage.getPageSize());
+        return postRepository.findAll(pageable);
     }
 }
