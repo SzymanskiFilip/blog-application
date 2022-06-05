@@ -1,28 +1,34 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 import Post from "../Components/Post";
+import { computeHeadingLevel } from "@testing-library/react";
 
 function HomePage(){
 
     const context = useContext(AuthContext);
+    const [posts, setPosts] = useState([]);
 
-    const dummyPost = {
-        title: "Why New York is so beautiful!",
-        body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique explicabo voluptas ipsum fuga repellendus suscipit sequi, consectetur iusto magnam aperiam. Qui rerum dignissimos sunt! A, quam? Expedita, natus. Illum, rerum!",
-        image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80",
-        likes: 542
-    };
+    async function getPosts(){
+        await fetch("http://localhost:8080/posts")
+        .then(res => res.json())
+        .then(data => setPosts(data.content))
+    }
 
-    let list = [];
-    list.push(dummyPost);
+    useEffect(() => {
+        getPosts();
+    }, []);
 
     return(
         <div>
             <Navbar status={context}/>
             <div 
             className="flex flex-col items-center justify-center my-10">
-                <Post data={dummyPost}/>
+            {
+                posts.map((p) => {
+                    return <Post data={p} key={p.id}/>
+                })
+            }
             </div>
         </div>
     )
