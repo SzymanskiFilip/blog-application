@@ -26,7 +26,7 @@ public class Post {
     @Column(name = "body")
     private String body;
     @Column(name = "image_name")
-    private UUID image_name;
+    private String image_name;
     @Column(name = "likes")
     private int likes;
 }

@@ -24,4 +24,10 @@ public class PostService {
         Pageable pageable = PageRequest.of(postPage.getPageNumber(), postPage.getPageSize());
         return postRepository.findAll(pageable);
     }
+
+    public Post getPost(Long id){
+        Post post = postRepository.findPostById(id).get();
+        log.info(post.toString());
+        return post;
+    }
 }
