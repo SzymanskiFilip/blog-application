@@ -1,10 +1,13 @@
 package eu.filip.backend.controller;
 
+import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
 import eu.filip.backend.entity.User;
+import eu.filip.backend.repository.LikeRepository;
 import eu.filip.backend.repository.PostRepository;
 import eu.filip.backend.repository.UserRepository;
+import eu.filip.backend.service.LikeService;
 import eu.filip.backend.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,7 @@ import java.util.Optional;
 public class Controller {
 
     private final PostService postService;
+    private final LikeService likeService;
 
     @GetMapping("/posts")
     public ResponseEntity<Page<Post>> posts(PostPage postPage){
@@ -36,5 +40,11 @@ public class Controller {
     public ResponseEntity<Post> post(@PathVariable("id") Long id){
         log.info("request sent");
         return ResponseEntity.ok(postService.getPost(id));
+    }
+
+    @GetMapping("/likes")
+    public Like like(){
+        likeService.likePost(1L, 4L);
+        return null;
     }
 }
