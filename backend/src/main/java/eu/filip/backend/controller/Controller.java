@@ -41,6 +41,7 @@ public class Controller {
         boolean authenticated = true;
         if(authenticated){
             log.info("USER WITH DETAILS");
+            //return ResponseEntity.ok(postService.getPostForAuthenticated(postId, userId));
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(postService.getPost(id));
