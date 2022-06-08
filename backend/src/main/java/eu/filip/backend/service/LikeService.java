@@ -10,12 +10,23 @@ import org.springframework.stereotype.Service;
 public class LikeService {
     private final LikeRepository likeRepository;
 
-    public Like likePost(Long userId, Long postId){
-        System.out.println(doesLikeExist(1L, 3L));
-        return new Like();
+    public void like(Long postId, Long userId){
+        if(doesLikeExist(postId, userId)){
+            toggleLike(postId, userId);
+        } else {
+            Like like = new Like();
+            like.setPost_id(postId);
+            like.setUser_id(userId);
+            like.setStatus(true);
+            likeRepository.save(like);
+        }
     }
 
-    private boolean doesLikeExist(Long userId, Long postId){
+    private boolean doesLikeExist(Long postId, Long userId){
         return likeRepository.findByPost_idAndUser_id(postId, userId).isPresent();
+    }
+
+    private void toggleLike(Long postId, Long userId){
+        likeRepository.toggleLike(postId, userId);
     }
 }

@@ -43,8 +43,12 @@ public class Controller {
     }
 
     @GetMapping("/likes")
-    public Like like(){
-        likeService.likePost(1L, 4L);
+    public ResponseEntity<?> like(){
+
+        Long postId = 3L, userId = 1L;
+
+        likeService.like(postId, userId);
+
         return null;
     }
 }

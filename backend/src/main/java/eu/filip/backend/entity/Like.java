@@ -16,4 +16,6 @@ public class Like {
     private Long user_id;
 
     private Long post_id;
+
+    private boolean status;
 }
