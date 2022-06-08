@@ -29,4 +29,8 @@ public class LikeService {
     private void toggleLike(Long postId, Long userId){
         likeRepository.toggleLike(postId, userId);
     }
+
+    public Like getLike(Long postId, Long userId){
+        return likeRepository.findByPost_idAndUser_id(postId, userId).get();
+    }
 }

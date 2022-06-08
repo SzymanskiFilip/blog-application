@@ -38,7 +38,11 @@ public class Controller {
 
     @GetMapping("/post/{id}")
     public ResponseEntity<Post> post(@PathVariable("id") Long id){
-        log.info("request sent");
+        boolean authenticated = true;
+        if(authenticated){
+            log.info("USER WITH DETAILS");
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(postService.getPost(id));
     }
 
