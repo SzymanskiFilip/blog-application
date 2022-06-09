@@ -36,6 +36,11 @@ public class Controller {
         return new ResponseEntity<>(postService.getPosts(postPage), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "h1";
+    }
+
     @GetMapping("/post/{id}")
     public ResponseEntity<Post> post(@PathVariable("id") Long id){
         boolean authenticated = false;

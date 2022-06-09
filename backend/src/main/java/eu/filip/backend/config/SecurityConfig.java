@@ -1,26 +1,63 @@
 package eu.filip.backend.config;
 
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/*
+@EnableWebSecurity
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.cors();
+
+        http
+                .authorizeRequests()
+                .antMatchers("/post/*").permitAll()
+                .antMatchers("/posts").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("user")
+                .password("1234")
+                .roles("USER");
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
+    }
+}
+ */
 
 @Configuration
-@AllArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig{
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests((authz) -> authz
+                        .antMatchers("/post/*").permitAll()
+                        .antMatchers("/posts").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin();
+        return http.build();
     }
 
-
-    //MOGE ZACZĄĆ NORMALNĄ KONFIGURACJE
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 }
