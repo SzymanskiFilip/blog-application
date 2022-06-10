@@ -1,5 +1,6 @@
 package eu.filip.backend.controller;
 
+import eu.filip.backend.dto.LikeDto;
 import eu.filip.backend.dto.PostDto;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
@@ -18,10 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -58,13 +56,14 @@ public class Controller {
         return ResponseEntity.ok(postService.getPost(id));
     }
 
-    @GetMapping("/likes")
-    public ResponseEntity<?> like(){
+    @PostMapping("/like")
+    public ResponseEntity<?> like(@RequestBody LikeDto likeDto, Authentication authentication){
 
-        Long postId = 3L, userId = 1L;
+        Long userId = userService.getUserByUsername(authentication.getName()).getId();
+        Long postId = likeDto.getId();
 
         likeService.like(postId, userId);
 
-        return null;
+        return ResponseEntity.accepted().build();
     }
 }
