@@ -1,5 +1,6 @@
 package eu.filip.backend.controller;
 
+import eu.filip.backend.dto.PostDto;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
@@ -9,17 +10,20 @@ import eu.filip.backend.repository.PostRepository;
 import eu.filip.backend.repository.UserRepository;
 import eu.filip.backend.service.LikeService;
 import eu.filip.backend.service.PostService;
+import eu.filip.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,7 @@ public class Controller {
 
     private final PostService postService;
     private final LikeService likeService;
+    private final UserService userService;
 
     @GetMapping("/posts")
     public ResponseEntity<Page<Post>> posts(PostPage postPage){
@@ -42,14 +47,14 @@ public class Controller {
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<Post> post(@PathVariable("id") Long id){
-        boolean authenticated = false;
-        if(authenticated){
+    public ResponseEntity<?> post(@PathVariable("id") Long id, Authentication authentication) throws Exception{
+        if(authentication != null && authentication.isAuthenticated()){
             log.info("USER WITH DETAILS");
-            //return ResponseEntity.ok(postService.getPostForAuthenticated(postId, userId));
-            //handle no value present
-            return ResponseEntity.notFound().build();
+            User user = userService.getUserByUsername(authentication.getName());
+            PostDto post = postService.getPostForAuthenticated(id, user.getId());
+            return ResponseEntity.ok(post);
         }
+        log.info("USER WITHOUT DETAILS");
         return ResponseEntity.ok(postService.getPost(id));
     }
 

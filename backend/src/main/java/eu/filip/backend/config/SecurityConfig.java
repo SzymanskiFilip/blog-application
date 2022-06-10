@@ -28,12 +28,13 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig{
 
     private UserRepository userRepository;
     private ObjectMapper objectMapper;
+    @Autowired
+    AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -49,9 +50,6 @@ public class SecurityConfig{
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    @Autowired
-    AuthenticationConfiguration authenticationConfiguration;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
