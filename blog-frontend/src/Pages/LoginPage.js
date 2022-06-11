@@ -1,14 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { AuthContext } from "../Util/AuthContext";
 
-function LoginPage(){
+function LoginPage({checkStatus}){
 
     const context = useContext(AuthContext);
     const navigate =useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        checkStatus();
+    },[]);
 
     //TODO: Make a spinner that loads until server responds
 

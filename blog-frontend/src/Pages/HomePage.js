@@ -3,7 +3,7 @@ import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 import Post from "../Components/Post";
 
-function HomePage(){
+function HomePage({checkStatus}){
 
     const context = useContext(AuthContext);
     const [posts, setPosts] = useState([]);
@@ -13,11 +13,10 @@ function HomePage(){
         .then(res => res.json())
         .then(data => setPosts(data.content))
     }
-    
-    console.log(posts)
 
     useEffect(() => {
         getPosts();
+        checkStatus();
     }, []);
 
     return(

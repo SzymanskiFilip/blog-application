@@ -5,7 +5,7 @@ import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 import {useState} from "react";
 
-function PostPage(){
+function PostPage({checkStatus}){
     const postId = useParams();
 
     const context = useContext(AuthContext);
@@ -21,6 +21,7 @@ function PostPage(){
 
     useEffect(() => {
         getPost();
+        checkStatus();
     },[]);
 
 
@@ -35,7 +36,7 @@ function PostPage(){
 
     return(
         <div>
-        <Navbar status={context}/>
+        <Navbar status={context.authenticated}/>
         <div className="flex flex-col items-center justify-cetner mb-12">
         <img src={'https://wallpaperaccess.com/full/2029165.jpg'} alt={process.env.PUBLIC_URL + `images/${postData.image_name}`}
         className="bg-img-full"

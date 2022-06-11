@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 
 function BlockAuth({children}){
 
+
     const context = useContext(AuthContext);
 
     return(

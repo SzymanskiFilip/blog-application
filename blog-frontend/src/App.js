@@ -6,6 +6,7 @@ import BlockAuth from "./Util/BlockAuth";
 import HomePage from "./Pages/HomePage";
 import PostPage from "./Pages/PostPage";
 import { useEffect } from "react";
+import { checkAuthentication } from "./Util/checkAuthentication";
 
 function App() {
 
@@ -16,17 +17,12 @@ function App() {
     setAuthenticated
   };
 
-  async function checkAuthentication(){
-    await fetch("http://localhost:8080/authenticated", {
-      method: "POST",
-      mode: "cors",
-      credentials: "include"
-    }).then(res => res.json())
-    .then(res => setAuthenticated(res))
+  function checkStatus(setAuthenticated){
+    checkAuthentication(state.setAuthenticated);
   }
 
   useEffect(() => {
-    checkAuthentication();
+    
   }, []);
 
   return (
@@ -35,20 +31,20 @@ function App() {
       <Route path="/login" element={
         <AuthContext.Provider value = {state}>
           <BlockAuth>
-            <LoginPage />
+            <LoginPage checkStatus={checkStatus}/>
           </BlockAuth>
         </AuthContext.Provider>
       }/>
 
       <Route path="/" element={
         <AuthContext.Provider value={state}>
-          <HomePage />
+          <HomePage checkStatus={checkStatus}/>
         </AuthContext.Provider>
       }/>
 
       <Route path="/post/:id" element={
         <AuthContext.Provider value={state}>
-          <PostPage />
+          <PostPage checkStatus={checkStatus}/>
         </AuthContext.Provider>
       }/>
 
