@@ -66,6 +66,7 @@ public class SecurityConfig{
                 .authorizeRequests()
                 .antMatchers("/post/*").permitAll()
                 .antMatchers("/posts").permitAll()
+                .antMatchers("/authenticated").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(loginFilter())
