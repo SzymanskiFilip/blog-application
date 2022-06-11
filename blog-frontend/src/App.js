@@ -5,6 +5,7 @@ import { AuthContext } from "./Util/AuthContext";
 import BlockAuth from "./Util/BlockAuth";
 import HomePage from "./Pages/HomePage";
 import PostPage from "./Pages/PostPage";
+import { useEffect } from "react";
 
 function App() {
 
@@ -14,6 +15,19 @@ function App() {
     authenticated,
     setAuthenticated
   };
+
+  async function checkAuthentication(){
+    await fetch("http://localhost:8080/authenticated", {
+      method: "POST",
+      mode: "cors",
+      credentials: "include"
+    }).then(res => res.json())
+    .then(res => setAuthenticated(res))
+  }
+
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
 
   return (
     <Routes>

@@ -10,6 +10,7 @@ function LoginPage(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    //TODO: Make a spinner that loads until server responds
 
     async function login(e){
         e.preventDefault();
