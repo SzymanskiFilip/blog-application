@@ -38,10 +38,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             );
             setDetails(request, token);
 
-            response.addCookie(new Cookie("ROLE", "USER")); // HARDCODED USER ROLE, BASED ON JPA RESPONSE
-
-            response.setHeader("Access-Control-Allow-Credentials", "true");
-
             return this.getAuthenticationManager().authenticate(token);
         } catch (IOException e) {
             throw new IllegalArgumentException(e.getMessage());
