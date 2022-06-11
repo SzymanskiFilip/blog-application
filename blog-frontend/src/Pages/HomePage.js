@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 import Post from "../Components/Post";
-import { computeHeadingLevel } from "@testing-library/react";
 
 function HomePage(){
 
@@ -14,6 +13,8 @@ function HomePage(){
         .then(res => res.json())
         .then(data => setPosts(data.content))
     }
+    
+    console.log(posts)
 
     useEffect(() => {
         getPosts();
@@ -21,7 +22,7 @@ function HomePage(){
 
     return(
         <div>
-            <Navbar status={context}/>
+            <Navbar status={context.authenticated}/>
             <div 
             className="flex flex-col items-center justify-center my-10">
             {

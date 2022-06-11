@@ -1,19 +1,36 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { AuthContext } from "../Util/AuthContext";
 
 function LoginPage(){
 
     const context = useContext(AuthContext);
-    console.log(context);
+    const navigate =useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
 
-    function login(){
+    async function login(e){
+        e.preventDefault();
         console.log(`username: ${username}, password: ${password}`);
-        context.setAuthenticated(true);
+        const credentials = {
+            username: username,
+            password: password
+        };
+      
+        fetch("http://localhost:8080/login", {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            body: JSON.stringify(credentials)
+        }).then(res => {
+            if(res.status === 200){
+                context.setAuthenticated(true);
+                navigate(-1);
+            }
+        })
+
     }
 
     return(

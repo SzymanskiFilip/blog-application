@@ -1,6 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar({status}){
+
+    const navigate = useNavigate();
+
+    function handleClick(e){
+        if(e === "LOGIN"){
+            navigate("/login");
+        } else if(e === "LOGOUT"){
+            console.log("LOGGING OUT")
+        }
+    }
+
     return(
         <nav className="
             bg-stone-900 
@@ -19,7 +30,7 @@ function Navbar({status}){
             <p className="col-span-1 text-center mx-4"><Link to={"/"}>Blog It!</Link></p>
             <div className="flex flex-row items-center justify-end">
                 <p className="mx-4">Write</p>
-                <p className="mx-4">{status ? "LOGOUT" : "LOGIN"}</p>
+                <p className="mx-4 hover:cursor-pointer" onClick={(e) => handleClick(e.target.textContent)}>{status ? "LOGOUT" : "LOGIN"}</p>
             </div>
         </nav>
     )

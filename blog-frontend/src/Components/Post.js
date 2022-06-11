@@ -1,14 +1,20 @@
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 function Post({data}){
 
     let shorterBody = data.body.slice(0, 200);
     shorterBody += "...";
 
+    const navigate = useNavigate();
+
+    function openPost(){
+        navigate(`/post/${data.id}`);
+    }
+
     return(
         <div className="w-8/12 flex flex-col justify-between bg-gray-100 px-2 py-2 rounded mb-12">
             <div>
-                <img src={data.image_name} alt={data.image_name}
+                <img src={`images/${data.image_name}.jpg`} alt={data.image_name}
                 className="post-bg-img rounded"
             />
             </div>
@@ -23,7 +29,7 @@ function Post({data}){
                 <div className="flex flex-row px-1 py-px sm:px-2 sm:py-2 bg-gray-200 rounded">
                     <h1 className="text-sm">Likes: {data.likes}</h1>
                 </div>
-                <h1 className="px-1 py-px sm:px-2 sm:py-2 bg-gray-200 rounded transition duration-300 hover:cursor-pointer hover:bg-gray-300">OPEN</h1>
+                <h1 className="px-1 py-px sm:px-2 sm:py-2 bg-gray-200 rounded transition duration-300 hover:cursor-pointer hover:bg-gray-300" onClick={openPost}>OPEN</h1>
             </div>
             
         </div>
