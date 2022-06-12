@@ -25,9 +25,13 @@ function HomePage({checkStatus}){
             <div 
             className="flex flex-col items-center justify-center my-10">
             {
+                posts.length > 0
+                ?
                 posts.map((p) => {
                     return <Post data={p} key={p.id}/>
                 })
+                :
+                <h1>No posts found</h1>
             }
             </div>
         </div>
