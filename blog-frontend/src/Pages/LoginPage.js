@@ -119,7 +119,7 @@ function LoginPage({checkStatus}){
 
                 <button className="border-black border px-px rounded" onClick={login} id="login">Login</button>
                 <p className="text-center text-xs mt-2">Don't have an account?</p>
-                <p className="text-center text-xs hover:cursor-pointer hover:text-blue-500">Create one here</p>
+                <Link className="text-center text-xs hover:cursor-pointer hover:text-blue-500" to="/register">Create one here</Link>
                 </div>
             </div>
         </div>

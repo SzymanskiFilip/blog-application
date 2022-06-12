@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { checkAuthentication } from "./Util/checkAuthentication";
 import RequireAuth from "./Util/RequireAuth";
 import CreatePage from "./Pages/CreatePage";
+import RegisterPage from "./Pages/RegisterPage";
 
 function App() {
 
@@ -55,6 +56,14 @@ function App() {
           <RequireAuth>
             <CreatePage checkStatus={checkStatus}/>
           </RequireAuth>
+        </AuthContext.Provider>
+      }/>
+
+      <Route path="/register" element={
+        <AuthContext.Provider value={state}>
+          <BlockAuth>
+            <RegisterPage />
+          </BlockAuth>
         </AuthContext.Provider>
       }/>
 
