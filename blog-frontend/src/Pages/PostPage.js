@@ -24,8 +24,12 @@ function PostPage({checkStatus}){
             credentials: "include"
         })
         .then(res => res.json())
-        .then(res => setPostData(res))
-        .then(setLikedState(postData.liked_status))
+        .then(res => setData(res))
+    }
+
+    function setData(response){
+        setPostData(response);
+        setLikedState(response.liked_status);
     }
 
     async function likeRequest(){
