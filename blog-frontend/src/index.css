@@ -11,3 +11,24 @@
     @apply h-52 w-full;
     object-fit: cover;
 }
+
+.loading{
+    display: flex;
+    justify-content: center;
+}
+
+.loading::after{
+    content: "";
+    width: 70px;
+    height: 70px;
+    border: 10px solid #dddddd;
+    border-top-color: blue;
+    border-radius: 50%;
+    animation: loading 2s ease infinite;
+}
+
+@keyframes loading{
+    to {
+        transform: rotate(3turn);
+    }
+}

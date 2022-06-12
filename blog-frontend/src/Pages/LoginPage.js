@@ -1,36 +1,55 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate  } from "react-router-dom";
 import { AuthContext } from "../Util/AuthContext";
+import Spinner from "../Components/Spinner";
 
 function LoginPage({checkStatus}){
 
     const context = useContext(AuthContext);
     const navigate =useNavigate();
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [spinner, setSpinner] = useState(false);
+    const [auth, setAuth] = useState(false);
 
     useEffect(() => {
         checkStatus();
     },[]);
 
-    //TODO: Make a spinner that loads until server responds
 
-    async function login(e){
-        e.preventDefault();
+    async function login(){
+        setSpinner(true);
         console.log(`username: ${username}, password: ${password}`);
         const credentials = {
             username: username,
             password: password
         };
       
+        setTimeout(() => {
+            if(!auth){
+                controller.abort();
+                setSpinner(false);
+                setPassword("");
+                let passwordInput = document.getElementById("password");
+                passwordInput.value = "";
+            }
+            
+        }, 5000);
+        
         fetch("http://localhost:8080/login", {
             method: "POST",
             mode: "cors",
             credentials: "include",
+            signal: signal,
             body: JSON.stringify(credentials)
         }).then(res => {
             if(res.status === 200){
+                setAuth(true);
+                setSpinner(false);
                 context.setAuthenticated(true);
                 navigate(-1);
             }
@@ -39,7 +58,21 @@ function LoginPage({checkStatus}){
     }
 
     return(
-        <div>
+        <div >
+
+            {
+                spinner
+                ?
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2
+                                -translate-y-1/2 z-10 bg-white h-64 w-80 flex flex-row items-center justify-center rounded">
+                    <Spinner />
+                </div>
+                :
+                <></>
+            }
+
+            
+
             <nav className="
             bg-stone-900 
             h-14 
@@ -69,7 +102,7 @@ function LoginPage({checkStatus}){
                 <input type="text" className="outline-none border-black border px-2" placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}/>
 
-                <input type="password" className="outline-none border-black border px-2 my-2" placeholder="Password"
+                <input type="password" className="outline-none border-black border px-2 my-2" id="password" required placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 />
 
