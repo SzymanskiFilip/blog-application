@@ -59,13 +59,13 @@ public class Controller {
 
     @PostMapping("/like")
     public ResponseEntity<?> like(@RequestBody LikeDto likeDto, Authentication authentication){
-
-        Long userId = userService.getUserByUsername(authentication.getName()).getId();
+        User user = userService.getUserByUsername(authentication.getName());
         Long postId = likeDto.getId();
 
-        likeService.like(postId, userId);
+        log.info("LIKING");
+        likeService.like(postId, user.getId());
 
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok("liked");
     }
 
 }
