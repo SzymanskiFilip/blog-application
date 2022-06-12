@@ -14,11 +14,17 @@ function PostPage({checkStatus}){
     const navigate = useNavigate();
 
     async function getPost(){
-        await fetch(`http://localhost:8080/post/${postId.id}`)
+        await fetch(`http://localhost:8080/post/${postId.id}`, {
+            method: "GET",
+            mode: "cors",
+            credentials: "include"
+        })
         .then(res => res.json())
         .then(res => setPostData(res))
-        
     }
+
+    //TODO: Serve images from server in the future!
+    //https://stackoverflow.com/questions/44611047/get-image-from-server-and-preview-it-on-client
 
     useEffect(() => {
         getPost();
