@@ -21,7 +21,7 @@ function HomePage({checkStatus}){
 
     return(
         <div>
-            <Navbar status={context.authenticated}/>
+            <Navbar status={context.authenticated} checkStatus={checkStatus}/>
             <div 
             className="flex flex-col items-center justify-center my-10">
             {
