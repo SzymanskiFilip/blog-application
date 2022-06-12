@@ -51,9 +51,10 @@ public class Controller {
             User user = userService.getUserByUsername(authentication.getName());
             PostDto post = postService.getPostForAuthenticated(id, user.getId());
             return ResponseEntity.ok(post);
+        } else {
+            log.info("USER WITHOUT DETAILS");
+            return ResponseEntity.ok(postService.getPost(id));
         }
-        log.info("USER WITHOUT DETAILS");
-        return ResponseEntity.ok(postService.getPost(id));
     }
 
     @PostMapping("/like")
@@ -66,4 +67,5 @@ public class Controller {
 
         return ResponseEntity.accepted().build();
     }
+
 }

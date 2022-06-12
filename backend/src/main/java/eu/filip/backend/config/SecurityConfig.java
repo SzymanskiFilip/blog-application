@@ -67,6 +67,7 @@ public class SecurityConfig{
                 .antMatchers("/post/*").permitAll()
                 .antMatchers("/posts").permitAll()
                 .antMatchers("/authenticated").permitAll()
+                .antMatchers("/check").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(loginFilter())
