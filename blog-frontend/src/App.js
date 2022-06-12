@@ -7,6 +7,8 @@ import HomePage from "./Pages/HomePage";
 import PostPage from "./Pages/PostPage";
 import { useEffect } from "react";
 import { checkAuthentication } from "./Util/checkAuthentication";
+import RequireAuth from "./Util/RequireAuth";
+import CreatePage from "./Pages/CreatePage";
 
 function App() {
 
@@ -45,6 +47,14 @@ function App() {
       <Route path="/post/:id" element={
         <AuthContext.Provider value={state}>
           <PostPage checkStatus={checkStatus}/>
+        </AuthContext.Provider>
+      }/>
+
+      <Route path="/create" element={
+        <AuthContext.Provider value={state}>
+          <RequireAuth>
+            <CreatePage checkStatus={checkStatus}/>
+          </RequireAuth>
         </AuthContext.Provider>
       }/>
 

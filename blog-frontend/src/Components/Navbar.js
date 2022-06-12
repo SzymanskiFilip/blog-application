@@ -14,6 +14,7 @@ function Navbar({status}){
             credentials: "include"
         })
         .then(res => console.log(res))
+        .then(navigate('/'));
     }
 
 
@@ -27,6 +28,7 @@ function Navbar({status}){
     }
 
     function navigateToWritePage(){
+
         navigate("/create");
     }
 
