@@ -18,43 +18,53 @@ function LoginPage({checkStatus}){
 
     useEffect(() => {
         checkStatus();
+        addKeyListener();
     },[]);
+    function addKeyListener(){
+        const keyboard = window;
+        keyboard.addEventListener("keydown", e =>{
+            if(e.key === "Enter"){
+                login();
+            }
+        })
+    }
 
 
     async function login(){
-        setSpinner(true);
-        console.log(`username: ${username}, password: ${password}`);
-        const credentials = {
-            username: username,
-            password: password
-        };
+        if(username.length > 0 && password.length > 0){
+            setSpinner(true);
+            console.log(`username: ${username}, password: ${password}`);
+            const credentials = {
+                username: username,
+                password: password
+            };
       
-        setTimeout(() => {
-            if(!auth){
-                controller.abort();
-                setSpinner(false);
-                setPassword("");
-                let passwordInput = document.getElementById("password");
-                passwordInput.value = "";
-            }
+            setTimeout(() => {
+                if(!auth){
+                    controller.abort();
+                    setSpinner(false);
+                    setPassword("");
+                    let passwordInput = document.getElementById("password");
+                    passwordInput.value = "";
+                }
             
-        }, 15000);
+            }, 15000);
         
-        fetch("http://localhost:8080/login", {
-            method: "POST",
-            mode: "cors",
-            credentials: "include",
-            signal: signal,
-            body: JSON.stringify(credentials)
-        }).then(res => {
-            if(res.status === 200){
-                setAuth(true);
-                setSpinner(false);
-                context.setAuthenticated(true);
-                navigate(-1);
-            }
-        })
-
+            fetch("http://localhost:8080/login", {
+                method: "POST",
+                mode: "cors",
+                credentials: "include",
+                signal: signal,
+                body: JSON.stringify(credentials)
+            }).then(res => {
+                if(res.status === 200){
+                    setAuth(true);
+                    setSpinner(false);
+                    context.setAuthenticated(true);
+                    navigate(-1);
+                }
+            })
+        }
     }
 
     return(
@@ -107,7 +117,7 @@ function LoginPage({checkStatus}){
                 />
 
 
-                <button className="border-black border px-px rounded" onClick={login}>Login</button>
+                <button className="border-black border px-px rounded" onClick={login} id="login">Login</button>
                 <p className="text-center text-xs mt-2">Don't have an account?</p>
                 <p className="text-center text-xs hover:cursor-pointer hover:text-blue-500">Create one here</p>
                 </div>
