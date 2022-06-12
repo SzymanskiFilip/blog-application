@@ -9,9 +9,13 @@ import {useState} from "react";
 function PostPage({checkStatus}){
     const postId = useParams();
 
+    //TODO: Serve images from server in the future!
+    //https://stackoverflow.com/questions/44611047/get-image-from-server-and-preview-it-on-client
+
     const context = useContext(AuthContext);
     const [postData, setPostData] = useState({});
     const navigate = useNavigate();
+    const [likedState, setLikedState] = useState();
 
     async function getPost(){
         await fetch(`http://localhost:8080/post/${postId.id}`, {
@@ -21,10 +25,21 @@ function PostPage({checkStatus}){
         })
         .then(res => res.json())
         .then(res => setPostData(res))
+        .then(setLikedState(postData.liked_status))
     }
 
-    //TODO: Serve images from server in the future!
-    //https://stackoverflow.com/questions/44611047/get-image-from-server-and-preview-it-on-client
+    async function likeRequest(){
+        fetch("http://localhost:8080/like", {
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(postId)
+        })
+        .then(res => console.log(res))
+    }
 
     useEffect(() => {
         getPost();
@@ -34,13 +49,17 @@ function PostPage({checkStatus}){
 
     function likePost(){
         if(context.authenticated === true){
-            
+            if(likedState){
+                setLikedState(false);
+                likeRequest();
+            } else {
+                setLikedState(true);
+                likeRequest();
+            }
         } else {
             navigate("/login", {url: window.location.href});
         }
     }
-
-    console.log(postData)
 
     return(
         <div>
@@ -61,7 +80,11 @@ function PostPage({checkStatus}){
                         <h1 className="text-sm">Likes: {postData.likes}</h1>
                     </div>
                     <div>
-                        <h1 className="px-1 py-px sm:px-2 sm:py-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300" onClick={likePost}>
+                        <h1 className={
+                            likedState ? "px-1 py-px sm:px-2 sm:py-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-red-300"
+                            :
+                            "px-1 py-px sm:px-2 sm:py-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300"
+                        } onClick={likePost}>
                         Like</h1>
                     </div>
                 </div>
