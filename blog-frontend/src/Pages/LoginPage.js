@@ -38,7 +38,7 @@ function LoginPage({checkStatus}){
                 passwordInput.value = "";
             }
             
-        }, 5000);
+        }, 15000);
         
         fetch("http://localhost:8080/login", {
             method: "POST",
