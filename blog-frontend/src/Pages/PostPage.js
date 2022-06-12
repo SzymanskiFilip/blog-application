@@ -89,7 +89,7 @@ function PostPage({checkStatus}){
                             :
                             "px-1 py-px sm:px-2 sm:py-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300"
                         } onClick={likePost}>
-                        Like</h1>
+                        {likedState ? "Unlike" : "Like"}</h1>
                     </div>
                 </div>
 
