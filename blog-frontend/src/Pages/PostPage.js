@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
 import { useParams, useNavigate} from "react-router-dom";
@@ -33,12 +34,13 @@ function PostPage({checkStatus}){
         }
     }
 
+    console.log(postData)
 
     return(
         <div>
         <Navbar status={context.authenticated}/>
         <div className="flex flex-col items-center justify-cetner mb-12">
-        <img src={'https://wallpaperaccess.com/full/2029165.jpg'} alt={process.env.PUBLIC_URL + `images/${postData.image_name}`}
+        <img src={`/images/${postData.image_name}.jpg`} alt={"picture"}
         className="bg-img-full"
         />
             <div className="flex flex-col justify-between bg-gray-100 rounded">
