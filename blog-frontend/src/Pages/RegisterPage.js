@@ -12,7 +12,8 @@ function RegisterPage(){
     //error, setError! = {} object
 
     const [usrTaken, setUsrTaken] = useState(false);
-    const [agreed, setAgreed] = useState(false);
+    const [agreed, setAgreed] = useState();
+    const [error, setError] = useState([]);
 
     function register(){
         const registerDto = {
@@ -26,18 +27,22 @@ function RegisterPage(){
             if(username.length > 5 && password.length > 5){
                 if(rePassword === password){
                     if(validator.isEmail(email)){
-                        //register
+                        console.log("email valid")            
                     } else {
                         // setError object to email error
+                        console.log("email not valid")
                     }
                 } else {
                     // passwords don't match
+                    console.log("password's don't macth")
                 }
             } else {
                 // passwords have to be longer than 5
+                console.log("passwords have to be longer than 5")
             }
         } else {
             // you have to accept
+            console.log("you have to accept the thing")
         }
 
         //check if user is taken, else register
@@ -78,7 +83,8 @@ function RegisterPage(){
                         <p className="text-sm">I agree with the term of services</p>
                     </div>
                     {
-                        usrTaken ? <p className="text-red-900">Username is already in use...</p> : <p></p>
+                        //usrTaken ? <p className="text-red-900">Username is already in use...</p> : <p></p>
+                        console.log(error)
                     }
                     <button className="bg-green-300 p-2 rounded text-black mt-2  hover:bg-green-400 transition duration-300" onClick={register}>Register</button>
                 </div>
