@@ -1,8 +1,8 @@
-function Spinner(){
+function Spinner({spinnerText}){
     return(
         <div>
             <div className="loading"></div>
-            Logging in...
+            {spinnerText}
         </div>
     )
 }
