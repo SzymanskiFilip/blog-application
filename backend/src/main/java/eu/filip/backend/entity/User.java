@@ -1,7 +1,9 @@
 package eu.filip.backend.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,6 +15,7 @@ import java.util.Collection;
 @Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class User implements UserDetails {
 
     @Id
@@ -23,9 +26,6 @@ public class User implements UserDetails {
     private String email;
     private String role;
 
-    public Long getId() {
-        return id;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

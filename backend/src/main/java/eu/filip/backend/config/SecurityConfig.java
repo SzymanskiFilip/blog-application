@@ -70,6 +70,7 @@ public class SecurityConfig{
                 .antMatchers("/check").permitAll()
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/check-availability").permitAll()
+                .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutUrl("/z")

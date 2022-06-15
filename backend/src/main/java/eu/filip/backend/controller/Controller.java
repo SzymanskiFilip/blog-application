@@ -2,6 +2,7 @@ package eu.filip.backend.controller;
 
 import eu.filip.backend.dto.LikeDto;
 import eu.filip.backend.dto.PostDto;
+import eu.filip.backend.dto.RegisterDataDto;
 import eu.filip.backend.dto.UsernameDto;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
@@ -73,6 +74,14 @@ public class Controller {
     ResponseEntity<?> checkAvalibility(@RequestBody UsernameDto usernameDto){
         boolean doesUserExist = userService.doesUserExist(usernameDto.getUsername());
         return ResponseEntity.ok(doesUserExist);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity<?> register(@RequestBody RegisterDataDto registerDataDto){
+        if(userService.doesUserExist(registerDataDto.getUsername())){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User already exists");
+        }
+        return userService.registerUser(registerDataDto);
     }
 
 
