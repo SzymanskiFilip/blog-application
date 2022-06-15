@@ -16,6 +16,9 @@ function RegisterPage(){
     const [error, setError] = useState([]);
 
     function register(){
+
+        console.log(username, password)
+
         const registerDto = {
             username,
             password,
@@ -24,27 +27,25 @@ function RegisterPage(){
         }
 
         if(agreed){
+            setError([]);
             if(username.length > 5 && password.length > 5){
                 if(rePassword === password){
                     if(validator.isEmail(email)){
                         console.log("email valid")            
                     } else {
-                        // setError object to email error
-                        console.log("email not valid")
+                        setError(error => [...error, "The Email is not valid"]);
                     }
                 } else {
-                    // passwords don't match
-                    console.log("password's don't macth")
+                    setError(error => [...error, "Passwords don't match"]);
                 }
             } else {
-                // passwords have to be longer than 5
-                console.log("passwords have to be longer than 5")
+                setError(error => [...error, "Passwords have to be longer than 5"]);
             }
         } else {
-            // you have to accept
-            console.log("you have to accept the thing")
+            setError(error => [...error, "You have to accept the term of services"]);
         }
 
+        console.log(error)
         //check if user is taken, else register
         //setUsrTaken(true);
     }
@@ -84,7 +85,9 @@ function RegisterPage(){
                     </div>
                     {
                         //usrTaken ? <p className="text-red-900">Username is already in use...</p> : <p></p>
-                        console.log(error)
+                        error.map(m => {
+                            return <h1 key={Math.random()}>{m}</h1>
+                        })
                     }
                     <button className="bg-green-300 p-2 rounded text-black mt-2  hover:bg-green-400 transition duration-300" onClick={register}>Register</button>
                 </div>
