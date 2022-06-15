@@ -2,6 +2,7 @@ package eu.filip.backend.controller;
 
 import eu.filip.backend.dto.LikeDto;
 import eu.filip.backend.dto.PostDto;
+import eu.filip.backend.dto.UsernameDto;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
@@ -67,5 +68,12 @@ public class Controller {
 
         return ResponseEntity.ok("liked");
     }
+
+    @PostMapping("/check-availability")
+    ResponseEntity<?> checkAvalibility(@RequestBody UsernameDto usernameDto){
+        boolean doesUserExist = userService.doesUserExist(usernameDto.getUsername());
+        return ResponseEntity.ok(doesUserExist);
+    }
+
 
 }

@@ -38,6 +38,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             );
             setDetails(request, token);
 
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             return this.getAuthenticationManager().authenticate(token);
         } catch (IOException e) {
             throw new IllegalArgumentException(e.getMessage());
