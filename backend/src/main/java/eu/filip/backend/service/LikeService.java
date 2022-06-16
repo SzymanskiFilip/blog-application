@@ -32,6 +32,7 @@ public class LikeService {
             like.setUser_id(userId);
             like.setStatus(true);
             likeRepository.save(like);
+            postRepository.changeLikeCount(postId, 1);
         }
     }
 
