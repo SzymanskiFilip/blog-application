@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import validator from "validator";
@@ -25,6 +26,8 @@ function RegisterPage(){
             password
         };
 
+        console.log(registerDto)
+
         if(agreed){
             setError([]);
             if(username.length > 5 && password.length > 5){
@@ -51,9 +54,7 @@ function RegisterPage(){
             },
             body: JSON.stringify(registerDto)
         })
-        .then(res => {
-            setError(error => [...error, res.text()]);
-        })
+        .then(res => console.log(res.text().then(res => setError(error => [...error, res]))))
 
         //check if user is taken, else register
         //setUsrTaken(true);
