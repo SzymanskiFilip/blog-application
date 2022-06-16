@@ -2,38 +2,33 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import validator from "validator";
+import Spinner from "../Components/Spinner";
+import {useNavigate} from "react-router-dom";
 
-function RegisterPage(){
+function RegisterPage({checkStatus}){
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+    const [spinner, setSpinner] = useState(false);
+    const [spinnerText, setSpinnerText] = useState("Registering, please wait...");
 
     //error, setError! = {} object
 
     const [usrTaken, setUsrTaken] = useState(false);
     const [agreed, setAgreed] = useState();
     const [error, setError] = useState([]);
+    const navigate = useNavigate();
 
     function register(){
-
-        console.log(username, password)
-
-        const registerDto = {
-            username,
-            email,
-            password
-        };
-
-        console.log(registerDto)
-
         if(agreed){
             setError([]);
             if(username.length > 5 && password.length > 5){
                 if(rePassword === password){
                     if(validator.isEmail(email)){
-                        console.log("email valid")            
+                        setSpinner(true);
+                        registerRequest();         
                     } else {
                         setError(error => [...error, "The Email is not valid"]);
                     }
@@ -46,6 +41,15 @@ function RegisterPage(){
         } else {
             setError(error => [...error, "You have to accept the term of services"]);
         }
+    }
+
+    async function registerRequest(){
+
+        const registerDto = {
+            username,
+            email,
+            password
+        };
 
         fetch("http://localhost:8080/register", {
             method: "POST",
@@ -54,10 +58,28 @@ function RegisterPage(){
             },
             body: JSON.stringify(registerDto)
         })
-        .then(res => console.log(res.text().then(res => setError(error => [...error, res]))))
-
-        //check if user is taken, else register
-        //setUsrTaken(true);
+        .then(res => {
+            
+            return res
+        })
+        .then(res => {
+            console.log(res)
+            if(res.status === 201){
+                setSpinnerText("Registered successfully, logging in and redirecting...")
+                setTimeout(() => {
+                    navigate("/login");
+                }, 1000);
+            } else {
+                setSpinner(false);
+            }
+            return res
+        })
+        .then(res => res.text())
+        .then(res => {
+            console.log(res)
+            return res
+        })
+        .then(res => setError(error => [...error, res]))
     }
 
     return(
@@ -80,6 +102,18 @@ function RegisterPage(){
                 </div>
             </nav>
 
+            {
+                spinner
+                ?
+                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2
+                    -translate-y-1/2 z-10 bg-white h-96 w-80 flex flex-row items-center justify-center rounded">
+                    <Spinner spinnerText={spinnerText}/>
+                </div>
+                :
+                <></>
+            }
+            
+           
 
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 outline-none border-black border px-2 py-2 rounded">
                 <h1 className="text-center">Register</h1>

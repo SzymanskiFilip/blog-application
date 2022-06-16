@@ -2,7 +2,7 @@ function Spinner({spinnerText}){
     return(
         <div>
             <div className="loading"></div>
-            {spinnerText}
+            <p className="text-center">{spinnerText}</p>
         </div>
     )
 }

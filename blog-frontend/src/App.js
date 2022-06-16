@@ -62,7 +62,7 @@ function App() {
       <Route path="/register" element={
         <AuthContext.Provider value={state}>
           <BlockAuth>
-            <RegisterPage />
+            <RegisterPage checkStatus={checkStatus}/>
           </BlockAuth>
         </AuthContext.Provider>
       }/>
