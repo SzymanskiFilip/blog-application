@@ -21,10 +21,9 @@ function RegisterPage(){
 
         const registerDto = {
             username,
-            password,
-            rePassword,
-            email
-        }
+            email,
+            password
+        };
 
         if(agreed){
             setError([]);
@@ -39,13 +38,23 @@ function RegisterPage(){
                     setError(error => [...error, "Passwords don't match"]);
                 }
             } else {
-                setError(error => [...error, "Passwords have to be longer than 5"]);
+                setError(error => [...error, "Usernames and Passwords have to be longer than 5"]);
             }
         } else {
             setError(error => [...error, "You have to accept the term of services"]);
         }
 
-        console.log(error)
+        fetch("http://localhost:8080/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(registerDto)
+        })
+        .then(res => {
+            setError(error => [...error, res.text()]);
+        })
+
         //check if user is taken, else register
         //setUsrTaken(true);
     }

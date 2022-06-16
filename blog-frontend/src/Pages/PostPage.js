@@ -42,7 +42,15 @@ function PostPage({checkStatus}){
             },
             body: JSON.stringify(postId)
         })
-        .then(res => console.log(res))
+        .then(res => {
+            if(res.status === 200){
+                if(likedState){
+                    setPostData({...postData, likes: postData.likes -1});
+                } else if (!likedState){
+                    setPostData({...postData, likes: postData.likes +1});
+                }
+            }
+        })
     }
 
     useEffect(() => {
