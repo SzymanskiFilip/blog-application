@@ -76,9 +76,12 @@ public class Controller {
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody RegisterDataDto registerDataDto){
         System.out.println("USER WANTS TO REGISTER - " + registerDataDto.toString());
+        try{
+            Thread.sleep(2000);
+        } catch (Exception e){}
         if(userService.doesUserExist(registerDataDto.getUsername())){
             System.out.println("username taken");
-            return ResponseEntity.ok("username taken");
+            return ResponseEntity.badRequest().body("Username Taken");
         }
         return userService.registerUser(registerDataDto);
     }
