@@ -1,5 +1,6 @@
 package eu.filip.backend.service;
 
+import eu.filip.backend.dto.ErrorResponseDto;
 import eu.filip.backend.dto.RegisterDataDto;
 import eu.filip.backend.entity.User;
 import eu.filip.backend.repository.UserRepository;
@@ -33,13 +34,14 @@ public class UserService {
         return false;
     }
 
-    public ResponseEntity<?> registerUser(RegisterDataDto registerDataDto){
+    public ResponseEntity<ErrorResponseDto> registerUser(RegisterDataDto registerDataDto){
+        System.out.println("USER WANTS TO REGISTER - " + registerDataDto.toString());
         if(registerDataDto.getPassword().length() < 6){
-            return ResponseEntity.badRequest().body("The password has to be at least 6 characters");
+            return ResponseEntity.badRequest().body(new ErrorResponseDto("The password has to be at least 6 characters"));
         }
 
         if(doesEmailExist(registerDataDto.getEmail())){
-            return ResponseEntity.badRequest().body("Email already in use");
+            return ResponseEntity.badRequest().body(new ErrorResponseDto("Email already in use"));
         }
 
         User user = new User();
@@ -49,6 +51,6 @@ public class UserService {
         user.setRole("USER");
 
         userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body("User Registered successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ErrorResponseDto("User Registered successfully"));
     }
 }

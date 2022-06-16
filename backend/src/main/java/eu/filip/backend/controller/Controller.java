@@ -1,9 +1,6 @@
 package eu.filip.backend.controller;
 
-import eu.filip.backend.dto.LikeDto;
-import eu.filip.backend.dto.PostDto;
-import eu.filip.backend.dto.RegisterDataDto;
-import eu.filip.backend.dto.UsernameDto;
+import eu.filip.backend.dto.*;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
@@ -78,8 +75,10 @@ public class Controller {
 
     @PostMapping("/register")
     ResponseEntity<?> register(@RequestBody RegisterDataDto registerDataDto){
+        System.out.println("USER WANTS TO REGISTER - " + registerDataDto.toString());
         if(userService.doesUserExist(registerDataDto.getUsername())){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User already exists");
+            System.out.println("username taken");
+            return ResponseEntity.ok("username taken");
         }
         return userService.registerUser(registerDataDto);
     }
