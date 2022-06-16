@@ -25,9 +25,21 @@ public class UserService {
         return false;
     }
 
+    private boolean doesEmailExist(String email){
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            return true;
+        }
+        return false;
+    }
+
     public ResponseEntity<?> registerUser(RegisterDataDto registerDataDto){
         if(registerDataDto.getPassword().length() < 6){
             return ResponseEntity.badRequest().body("The password has to be at least 6 characters");
+        }
+
+        if(doesEmailExist(registerDataDto.getEmail())){
+            return ResponseEntity.badRequest().body("Email already in use");
         }
 
         User user = new User();

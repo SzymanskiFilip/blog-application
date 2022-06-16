@@ -42,4 +42,8 @@ public class PostService {
         return postRepository.findPostById(postId).get();
     }
 
+    public void updatePostLikes(Long postId, int amount){
+        postRepository.changeLikeCount(postId, amount);
+    }
+
 }

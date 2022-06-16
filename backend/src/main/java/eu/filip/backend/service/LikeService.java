@@ -1,17 +1,30 @@
 package eu.filip.backend.service;
 
 import eu.filip.backend.entity.Like;
+import eu.filip.backend.entity.Post;
 import eu.filip.backend.repository.LikeRepository;
+import eu.filip.backend.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 @Service
 @AllArgsConstructor
 public class LikeService {
+
     private final LikeRepository likeRepository;
+    private final PostRepository postRepository;
 
     public void like(Long postId, Long userId){
         if(doesLikeExist(postId, userId)){
+            Like like = likeRepository.findByPost_idAndUser_id(postId, userId).get();
+            if(like.isStatus()){
+                postRepository.changeLikeCount(postId, -1);
+            } else if(!like.isStatus()){
+                postRepository.changeLikeCount(postId, 1);
+            }
             toggleLike(postId, userId);
         } else {
             Like like = new Like();
