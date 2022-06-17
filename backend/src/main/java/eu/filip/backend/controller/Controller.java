@@ -19,10 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -84,6 +87,21 @@ public class Controller {
             return ResponseEntity.badRequest().body("Username Taken");
         }
         return userService.registerUser(registerDataDto);
+    }
+
+    @PostMapping("/create-post")
+    ResponseEntity<?> createPost(@RequestParam("file") MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString();
+        String name = uuid += fileName;
+        System.out.println("FILE NAME: " + name);
+
+        try{
+            file.transferTo(new File("/home/filip/Software Development/blog-application/blog-frontend/public/images/" + name));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
     }
 
 
