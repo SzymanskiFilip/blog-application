@@ -34,15 +34,21 @@ public class PostService {
 
     public PostDto getPostForAuthenticated(Long postId, Long userId){
         Post post = postRepository.findPostById(postId).get();
-        PostDto postDto = new PostDto(
-                post.getId(),
-                post.getCreator_id(),
-                post.getTitle(),
-                post.getBody(),
-                post.getImage_name(),
-                post.getLikes(),
-                likeService.getLike(postId, userId).isStatus()
-        );
+
+        System.out.println(post);
+
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setTitle(post.getTitle());
+        postDto.setBody(post.getBody());
+        postDto.setLikes(post.getLikes());
+        postDto.setCreator_id(post.getCreator_id());
+        postDto.setImage_name(post.getImage_name());
+        if(!likeService.doesLikeExist(postId, userId)){
+            postDto.setLiked_status(false);
+        } else {
+            postDto.setLiked_status(likeService.getLike(postId, userId).isStatus());
+        }
         return postDto;
     }
 

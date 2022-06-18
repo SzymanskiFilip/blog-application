@@ -1,5 +1,9 @@
 package eu.filip.backend.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class PostDto {
     private Long id;
     private Long creator_id;

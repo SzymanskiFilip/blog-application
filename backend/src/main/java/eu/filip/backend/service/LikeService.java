@@ -36,7 +36,7 @@ public class LikeService {
         }
     }
 
-    private boolean doesLikeExist(Long postId, Long userId){
+    public boolean doesLikeExist(Long postId, Long userId){
         return likeRepository.findByPost_idAndUser_id(postId, userId).isPresent();
     }
 

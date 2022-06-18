@@ -49,7 +49,6 @@ public class Controller {
     @GetMapping("/post/{id}")
     public ResponseEntity<?> post(@PathVariable("id") Long id, Authentication authentication) throws Exception{
         if(authentication != null && authentication.isAuthenticated()){
-            log.info("USER WITH DETAILS");
             User user = userService.getUserByUsername(authentication.getName());
             PostDto post = postService.getPostForAuthenticated(id, user.getId());
             return ResponseEntity.ok(post);
