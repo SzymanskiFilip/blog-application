@@ -89,8 +89,8 @@ public class Controller {
         return userService.registerUser(registerDataDto);
     }
 
-    @PostMapping("/create-post")
-    ResponseEntity<?> createPost(@RequestParam("file") MultipartFile file){
+    @PostMapping("/create-post-image")
+    ResponseEntity<?> createPost(@RequestParam("file") MultipartFile file, @RequestParam("id") Long postId){
         String fileName = file.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
         String name = uuid += fileName;
@@ -98,10 +98,20 @@ public class Controller {
 
         try{
             file.transferTo(new File("/home/filip/Software Development/blog-application/blog-frontend/public/images/" + name));
+            postService.setPostFileName(postId, name);
         } catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/create-post-data")
+    ResponseEntity<?> createPostData(@RequestBody PostCreationDto postCreationDto, Authentication authentication){
+        if(authentication != null && authentication.isAuthenticated()){
+            return ResponseEntity.ok(postService.createPost(postCreationDto, authentication));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 

@@ -22,4 +22,9 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Modifying
     @Query(nativeQuery = true, value = "update posts set likes = likes + ?2 where id = ?1")
     void changeLikeCount(Long postId, int amount);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "update posts set image_name = ?2 where id = ?1")
+    void updateImageName(Long postId, String fileName);
 }
