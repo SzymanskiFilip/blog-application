@@ -10,24 +10,51 @@ function CreatePage({checkStatus}){
 
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+
     useEffect(() => {
         checkStatus();
     }, []);
 
     const [imageUpload, setImageUpload] = useState(null);
-    const uploadImage = () => {
-        if(imageUpload == null) return;
-        
-        let formData = new FormData();
-        formData.set("file", imageUpload);
-        fetch("http://localhost:8080/create-post", {
+
+    async function post(){
+        console.log(title, body)
+        fetch("http://localhost:8080/create-post-data", {
             method: "POST",
             credentials: "include",
             mode: "cors",
-            onUploadProgress: progressEvent => {
-                //console.log(first)
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({title, body})
+        })
+        .then(res => {
+            if(res.status === 200){
+                return res.json()
             }
         })
+        .then(res => {
+            uploadImage(res.id);
+        })
+        
+    }
+
+    const uploadImage = (id) => {
+        console.log("UPLOAD FUNCTION")
+        console.log(id)
+        if(imageUpload == null) return;
+        let formData = new FormData();
+        formData.set("file", imageUpload);
+        formData.set("id", id);
+        fetch("http://localhost:8080/create-post-image", {
+            method: "POST",
+            credentials: "include",
+            mode: "cors",
+            body: formData,
+            onUploadProgress: (p) => {
+                console.log(p)
+            }
+        }).then(res => console.log(res))
     };
 
     return (
@@ -44,12 +71,12 @@ function CreatePage({checkStatus}){
                 px-4
                 py-4">
                 <h1>Title</h1>
-                <input type="text" className="outline-none border-black border px-2"/>
+                <input type="text" className="outline-none border-black border px-2" onChange={(e) => setTitle(e.target.value)}/>
                 <h1>Body</h1>
-                <textarea name="" id="" cols="50" rows="10" placeholder="Input your text here..." className="outline-none border-black border px-2"></textarea>
+                <textarea cols="50" rows="10" placeholder="Input your text here..." onChange={(e) => setBody(e.target.value)} className="outline-none border-black border px-2"></textarea>
                 <h1>Upload Background Image:</h1>
                 <input type="file" accept="image/*" name="fileupload" onChange={(event) => setImageUpload(event.target.files[0])}/>
-                <button onClick={uploadImage}>send</button>
+                <button onClick={post}>send</button>
             </div>
             </div>
         </div>

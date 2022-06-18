@@ -10,11 +10,12 @@ function Post({data}){
     function openPost(){
         navigate(`/post/${data.id}`);
     }
+    console.log(data.image_name)
 
     return(
         <div className="w-8/12 flex flex-col justify-between bg-gray-100 px-2 py-2 rounded mb-12">
             <div>
-                <img src={`images/${data.image_name}.jpg`} alt={data.image_name}
+                <img src={`images/${data.image_name}`} alt={data.image_name}
                 className="post-bg-img rounded"
             />
             </div>
