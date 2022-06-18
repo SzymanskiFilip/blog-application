@@ -49,6 +49,12 @@ public class PostService {
         } else {
             postDto.setLiked_status(likeService.getLike(postId, userId).isStatus());
         }
+        //TODO: TO IMPLEMENT
+        if(userId == post.getCreator_id()){
+            postDto.setYour_post(true);
+        } else {
+            postDto.setYour_post(false);
+        }
         return postDto;
     }
 
