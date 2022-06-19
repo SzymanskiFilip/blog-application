@@ -12,12 +12,11 @@ function CreatePage({checkStatus}){
 
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
+    const [imageUpload, setImageUpload] = useState(null);
 
     useEffect(() => {
         checkStatus();
     }, []);
-
-    const [imageUpload, setImageUpload] = useState(null);
 
     async function post(){
         console.log(title, body)
