@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { AuthContext } from "../Util/AuthContext";
 import Navbar from "../Components/Navbar";
 
@@ -8,6 +8,7 @@ function EditPage(){
     let context = useContext(AuthContext);
     const location = useLocation();
     const postData = location.state;
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState(postData.title);
     const [body, setBody] = useState(postData.body);
@@ -35,11 +36,44 @@ function EditPage(){
     }
 
     async function saveWithoutImage(){
-        console.log("withou")
+        const dto = {
+            id: postData.id, 
+            title: title,
+            body: body
+        };
+        fetch("http://localhost:8080/post", {
+            method: "PATCH",
+            mode: "cors",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dto)
+        })
+        .then(res => {
+            if(res.status === 200){
+                navigate(-1);
+            }
+        })
     }
 
     async function saveWithImage(){
-        console.log("with")
+        if(imageUpload == null) return;
+        let formData = new FormData();
+        formData.set("file", imageUpload);
+        formData.set("id", postData.id);
+        formData.set("title", title);
+        formData.set("body", body);
+        fetch("http://localhost:8080/update-image", {
+            method: "PATCH",
+            credentials: "include",
+            mode: "cors",
+            body: formData,
+            onUploadProgress: (p) => {
+                console.log(p)
+            }
+        }).then(res => console.log(res))
+        //then savewithoutimage
     }
 
     return(
@@ -68,7 +102,7 @@ function EditPage(){
                     ?
                     <img src={preview} className="h-24" alt="preview"/>
                     :
-                    <img src={`images/${postData.image_name}`} className="h-24" alt="preview"/>
+                    <img src={`images/${postData.image_name}`} className="h-24 object-cover" alt="preview"/>
                 }
                 
                 <button onClick={save}>SAVE</button>
