@@ -64,7 +64,7 @@ function EditPage(){
         formData.set("id", postData.id);
         formData.set("title", title);
         formData.set("body", body);
-        fetch("http://localhost:8080/update-image", {
+        fetch("http://localhost:8080/post-img", {
             method: "PATCH",
             credentials: "include",
             mode: "cors",
@@ -72,7 +72,11 @@ function EditPage(){
             onUploadProgress: (p) => {
                 console.log(p)
             }
-        }).then(res => console.log(res))
+        }).then(res => {
+            if(res.status === 200){
+                navigate(-1);
+            }
+        })
         //then savewithoutimage
     }
 
