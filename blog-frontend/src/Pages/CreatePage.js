@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 
 function CreatePage({checkStatus}){
 
     const context = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -55,6 +57,7 @@ function CreatePage({checkStatus}){
                 console.log(p)
             }
         }).then(res => console.log(res))
+        .then(navigate("/"))
     };
 
     return (

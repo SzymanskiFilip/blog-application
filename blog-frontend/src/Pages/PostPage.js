@@ -32,6 +32,8 @@ function PostPage({checkStatus}){
         setLikedState(response.liked_status);
     }
 
+    console.log(postData)
+
     async function likeRequest(){
         fetch("http://localhost:8080/like", {
             method: "POST",
@@ -77,7 +79,7 @@ function PostPage({checkStatus}){
         <div>
         <Navbar status={context.authenticated}/>
         <div className="flex flex-col items-center justify-cetner mb-12">
-        <img src={`/images/${postData.image_name}.jpg`} alt={"picture"}
+        <img src={`/images/${postData.image_name}`} alt={"picture"}
         className="bg-img-full"
         />
             <div className="flex flex-col justify-between bg-gray-100 rounded">
@@ -102,6 +104,13 @@ function PostPage({checkStatus}){
                 </div>
 
             </div>
+            {
+                postData.your_post
+                ?
+                <h1 className="px-1 py-px sm:px-2 sm:py-2 mt-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300">Edit</h1>
+                :
+                <></>
+            }
         </div>
         </div>
     )

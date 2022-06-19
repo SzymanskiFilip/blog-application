@@ -28,8 +28,11 @@ function Navbar({status}){
     }
 
     function navigateToWritePage(){
-
         navigate("/create");
+    }
+
+    function navigateToAccountPage(){
+        navigate("/account");
     }
 
     return(
@@ -53,6 +56,13 @@ function Navbar({status}){
                     status
                     ?
                     <p className="mx-4 hover:cursor-pointer" onClick={navigateToWritePage}>Write</p>
+                    :
+                    <></>
+                }
+                {
+                    status
+                    ?
+                    <p className="mx-4 hover:cursor-pointer" onClick={navigateToAccountPage}>Account</p>
                     :
                     <></>
                 }
