@@ -69,6 +69,34 @@ public class Controller {
         return ResponseEntity.ok().body(status);
     }
 
+    @PatchMapping("/post-img")
+    public ResponseEntity<?> patchPostImg(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id,
+                                       @RequestParam("title") String title, @RequestParam("body") String body, Authentication authentication){
+        boolean status = false;
+        if(authentication != null && authentication.isAuthenticated()){
+
+            String fileName = file.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString();
+            String name = uuid += fileName;
+            System.out.println("FILE NAME: " + name);
+
+            try{
+                file.transferTo(new File("/home/filip/Software Development/blog-application/blog-frontend/public/images/" + name));
+                postService.setPostFileName(id, name);
+
+                UpdatePostDto dto = new UpdatePostDto();
+                dto.setId(id);
+                dto.setTitle(title);
+                dto.setBody(body);
+                status = postService.updatePostDto(dto, authentication);
+                return ResponseEntity.ok().body(status);
+            } catch (Exception e){
+                return ResponseEntity.badRequest().build();
+            }
+        }
+        return ResponseEntity.ok().body(status);
+    }
+
     @PostMapping("/like")
     public ResponseEntity<?> like(@RequestBody LikeDto likeDto, Authentication authentication){
         User user = userService.getUserByUsername(authentication.getName());
