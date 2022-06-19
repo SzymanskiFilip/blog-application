@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react";
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate, Link} from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { AuthContext } from "../Util/AuthContext";
 import {useState} from "react";
@@ -75,6 +75,10 @@ function PostPage({checkStatus}){
         }
     }
 
+    function navigateEdit(){
+        navigate("/edit", {postData});
+    }
+
     return(
         <div>
         <Navbar status={context.authenticated}/>
@@ -107,7 +111,7 @@ function PostPage({checkStatus}){
             {
                 postData.your_post
                 ?
-                <h1 className="px-1 py-px sm:px-2 sm:py-2 mt-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300">Edit</h1>
+                <Link className="px-1 py-px sm:px-2 sm:py-2 mt-2 bg-gray-200 transition duration-300 rounded hover:cursor-pointer hover:bg-green-300" to="/edit" state={postData}>Edit</Link>
                 :
                 <></>
             }

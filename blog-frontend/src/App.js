@@ -10,6 +10,7 @@ import { checkAuthentication } from "./Util/checkAuthentication";
 import RequireAuth from "./Util/RequireAuth";
 import CreatePage from "./Pages/CreatePage";
 import RegisterPage from "./Pages/RegisterPage";
+import EditPage from "./Pages/EditPage";
 
 function App() {
 
@@ -64,6 +65,14 @@ function App() {
           <BlockAuth>
             <RegisterPage checkStatus={checkStatus}/>
           </BlockAuth>
+        </AuthContext.Provider>
+      }/>
+
+      <Route path="/edit" element={
+        <AuthContext.Provider value={state}>
+          <RequireAuth>
+            <EditPage checkStatus={checkStatus}/>
+          </RequireAuth>
         </AuthContext.Provider>
       }/>
 
