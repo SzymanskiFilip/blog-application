@@ -58,6 +58,17 @@ public class Controller {
         }
     }
 
+    @PatchMapping("/post")
+    public ResponseEntity<?> patchPost(@RequestBody UpdatePostDto dto, Authentication authentication){
+        boolean status;
+        if(authentication != null && authentication.isAuthenticated()){
+            status = postService.updatePostDto(dto, authentication);
+        } else {
+            status = false;
+        }
+        return ResponseEntity.ok().body(status);
+    }
+
     @PostMapping("/like")
     public ResponseEntity<?> like(@RequestBody LikeDto likeDto, Authentication authentication){
         User user = userService.getUserByUsername(authentication.getName());

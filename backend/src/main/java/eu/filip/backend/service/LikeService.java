@@ -1,14 +1,11 @@
 package eu.filip.backend.service;
 
 import eu.filip.backend.entity.Like;
-import eu.filip.backend.entity.Post;
 import eu.filip.backend.repository.LikeRepository;
 import eu.filip.backend.repository.PostRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 
 @Service
 @AllArgsConstructor

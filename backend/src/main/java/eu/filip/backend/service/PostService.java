@@ -2,6 +2,7 @@ package eu.filip.backend.service;
 
 import eu.filip.backend.dto.PostCreationDto;
 import eu.filip.backend.dto.PostDto;
+import eu.filip.backend.dto.UpdatePostDto;
 import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
@@ -80,6 +81,18 @@ public class PostService {
 
     public void setPostFileName(Long postId, String fileName){
         postRepository.updateImageName(postId, fileName);
+    }
+
+    public boolean updatePostDto(UpdatePostDto updatePostDto, Authentication authentication){
+        User user = userRepository.findByUsername(authentication.getName());
+        Post post = postRepository.findPostByCreator_id(user.getId()).get();
+
+        if(post.getCreator_id() == user.getId()){
+            postRepository.updatePostWithoutImage(updatePostDto.getTitle(), updatePostDto.getBody(), updatePostDto.getId());
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
