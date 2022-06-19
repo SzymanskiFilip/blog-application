@@ -90,7 +90,7 @@ function PostPage({checkStatus}){
                  
                 <div className="mx-4">
                     <h1 className="text-2xl sm:text-5xl mt-2 mb-2">{postData.title}</h1>
-                    <p>{postData.body}</p>
+                    <p className="body-text">{postData.body}</p>
                 </div>
 
                 <div className="flex flex-row items-center justify-between mx-4 mt-2 mb-2">

@@ -22,7 +22,7 @@ function Post({data}){
             
             <div className="mx-4">
                 <h1 className="text-2xl sm:text-5xl mt-2 mb-2">{data.title}</h1>
-                <p>{shorterBody} <Link to={`/post/${data.id}`} className="text-blue-500">read more</Link></p>
+                <p className="body-text">{shorterBody} <Link to={`/post/${data.id}`} className="text-blue-500">read more</Link></p>
 
             </div>
 
