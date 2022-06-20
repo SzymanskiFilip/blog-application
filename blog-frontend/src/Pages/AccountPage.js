@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import Navbar from "../Components/Navbar";
+import Options from "../Components/Options";
 import { AuthContext } from "../Util/AuthContext";
 
 function AccountPage(){
@@ -8,7 +9,6 @@ function AccountPage(){
 
     const [optionNumber, setOptionNumber] = useState(0);
     const options = [{name: "Account", index: 0}, {name: "Posts", index: 1}];
-
 
     return(
         <div>
@@ -29,6 +29,10 @@ function AccountPage(){
                         })
                     }
                 </div>
+
+                {
+                    <Options option={optionNumber + 1}/>
+                }
             </div>
         </div>
     )
