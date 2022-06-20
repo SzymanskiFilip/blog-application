@@ -35,7 +35,12 @@ function CreatePage({checkStatus}){
             }
         })
         .then(res => {
+            if(imageUpload == null){
+                navigate("/");
+                return;
+            }
             uploadImage(res.id);
+            
         })
         
     }
