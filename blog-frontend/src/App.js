@@ -11,6 +11,7 @@ import RequireAuth from "./Util/RequireAuth";
 import CreatePage from "./Pages/CreatePage";
 import RegisterPage from "./Pages/RegisterPage";
 import EditPage from "./Pages/EditPage";
+import AccountPage from "./Pages/AccountPage";
 
 function App() {
 
@@ -72,6 +73,14 @@ function App() {
         <AuthContext.Provider value={state}>
           <RequireAuth>
             <EditPage checkStatus={checkStatus}/>
+          </RequireAuth>
+        </AuthContext.Provider>
+      }/>
+
+      <Route path="/account" element={
+        <AuthContext.Provider value={state}>
+          <RequireAuth>
+            <AccountPage checkStatus={checkStatus}/>
           </RequireAuth>
         </AuthContext.Provider>
       }/>
