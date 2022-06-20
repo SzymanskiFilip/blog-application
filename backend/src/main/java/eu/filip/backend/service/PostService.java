@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -93,6 +94,15 @@ public class PostService {
         } else {
             return false;
         }
+    }
+
+    public List<Post> getMyPosts(Long userId, Authentication authentication){
+        if(authentication != null && authentication.isAuthenticated()){
+            if(postRepository.findPostsByCreator_id(userId).isPresent()){
+                return postRepository.findPostsByCreator_id(userId).get();
+            }
+        }
+        return null;
     }
 
 }

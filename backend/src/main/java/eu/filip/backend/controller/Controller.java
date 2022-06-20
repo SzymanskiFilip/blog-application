@@ -1,20 +1,15 @@
 package eu.filip.backend.controller;
 
 import eu.filip.backend.dto.*;
-import eu.filip.backend.entity.Like;
 import eu.filip.backend.entity.Post;
 import eu.filip.backend.entity.PostPage;
 import eu.filip.backend.entity.User;
-import eu.filip.backend.repository.LikeRepository;
-import eu.filip.backend.repository.PostRepository;
-import eu.filip.backend.repository.UserRepository;
 import eu.filip.backend.service.LikeService;
 import eu.filip.backend.service.PostService;
 import eu.filip.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -42,16 +35,20 @@ public class Controller {
     }
 
     @GetMapping("/myPosts")
-    public ResponseEntity<Post> myPosts(Authentication authentication){
+    public ResponseEntity<List<Post>> myPosts(Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
             User user = userService.getUserByUsername(authentication.getName());
-            return null;
+            if(postService.getMyPosts(user.getId(), authentication) != null){
+                return ResponseEntity.ok().body(postService.getMyPosts(user.getId(), authentication));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         }
         return null;
     }
 
     @GetMapping("/post/{id}")
-    public ResponseEntity<?> post(@PathVariable("id") Long id, Authentication authentication) throws Exception{
+    public ResponseEntity<?> post(@PathVariable("id") Long id, Authentication authentication){
         if(authentication != null && authentication.isAuthenticated()){
             User user = userService.getUserByUsername(authentication.getName());
             PostDto post = postService.getPostForAuthenticated(id, user.getId());

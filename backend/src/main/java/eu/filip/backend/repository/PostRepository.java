@@ -36,6 +36,6 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query(nativeQuery = true, value = "select * from posts where creator_id = ?1 and id = ?2")
     Optional<Post> findPostByCreator_idAndPostId(Long creator_id, Long id);
 
-    @Query(nativeQuery = true, value="select * from posts where creator_id ")
-    List<Post> findPostsByCreator_id(Long id);
+    @Query(nativeQuery = true, value="select * from posts where creator_id = ?1")
+    Optional<List<Post>> findPostsByCreator_id(Long id);
 }
