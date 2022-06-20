@@ -33,6 +33,9 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
     @Query(nativeQuery = true, value = "update posts set title = ?1, body = ?2 where id = ?3")
     void updatePostWithoutImage(String title, String body, Long id);
 
-    @Query(nativeQuery = true, value = "select * from posts where creator_id = ?1")
-    Optional<Post> findPostByCreator_id(Long creator_id);
+    @Query(nativeQuery = true, value = "select * from posts where creator_id = ?1 and id = ?2")
+    Optional<Post> findPostByCreator_idAndPostId(Long creator_id, Long id);
+
+    @Query(nativeQuery = true, value="select * from posts where creator_id ")
+    List<Post> findPostsByCreator_id(Long id);
 }

@@ -41,9 +41,13 @@ public class Controller {
         return new ResponseEntity<>(postService.getPosts(postPage), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "h1";
+    @GetMapping("/myPosts")
+    public ResponseEntity<Post> myPosts(Authentication authentication){
+        if(authentication != null && authentication.isAuthenticated()){
+            User user = userService.getUserByUsername(authentication.getName());
+            return null;
+        }
+        return null;
     }
 
     @GetMapping("/post/{id}")

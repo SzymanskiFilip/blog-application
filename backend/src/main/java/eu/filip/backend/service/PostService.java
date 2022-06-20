@@ -85,7 +85,7 @@ public class PostService {
 
     public boolean updatePostDto(UpdatePostDto updatePostDto, Authentication authentication){
         User user = userRepository.findByUsername(authentication.getName());
-        Post post = postRepository.findPostByCreator_id(user.getId()).get();
+        Post post = postRepository.findPostByCreator_idAndPostId(user.getId(), updatePostDto.getId()).get();
 
         if(post.getCreator_id() == user.getId()){
             postRepository.updatePostWithoutImage(updatePostDto.getTitle(), updatePostDto.getBody(), updatePostDto.getId());
