@@ -12,4 +12,5 @@ import lombok.extern.jackson.Jacksonized;
 public class LoginCredentials {
     private String username;
     private String password;
+    private boolean remember_me;
 }
