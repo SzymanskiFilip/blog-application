@@ -17,7 +17,6 @@ public class RememberFilter extends RememberMeAuthenticationFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("REMEMBERME-FILTER");
         super.doFilter(request, response, chain);
     }
 

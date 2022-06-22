@@ -18,9 +18,7 @@ import java.security.Principal;
 public class LoginController {
 
     @PostMapping("/login")
-    public void login(@RequestBody LoginCredentials loginCredentials){
-        System.out.println(loginCredentials.getPassword());
-    }
+    public void login(@RequestBody LoginCredentials loginCredentials){}
 
     @PostMapping("/authenticated")
     public boolean authenticated(Authentication authentication){

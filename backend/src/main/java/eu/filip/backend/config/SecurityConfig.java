@@ -3,6 +3,7 @@ package eu.filip.backend.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.filip.backend.repository.UserRepository;
 import eu.filip.backend.service.UserDetailsServiceImpl;
+import eu.filip.backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +29,8 @@ public class SecurityConfig{
 
     private UserRepository userRepository;
     private ObjectMapper objectMapper;
+    private UserService userService;
+
     @Autowired
     AuthenticationConfiguration authenticationConfiguration;
 
@@ -68,8 +71,6 @@ public class SecurityConfig{
                 .and()
                 .addFilter(loginFilter())
                 .addFilter(rememberFilter())
-                //.rememberMe().userDetailsService(userDetailsService()).rememberMeCookieName("remember-me").tokenValiditySeconds(292000).key("secret")
-                //.and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
@@ -88,8 +89,8 @@ public class SecurityConfig{
         return rememberFilter;
     }
 
-    public RememberService rememberService(){
-        RememberService rememberService = new RememberService();
+    public RememberService rememberService() throws Exception {
+        RememberService rememberService = new RememberService(authenticationManager(authenticationConfiguration), userService);
         return rememberService;
     }
 
