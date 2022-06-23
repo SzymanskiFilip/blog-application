@@ -10,8 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.RememberMeAuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.RememberMeConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -21,6 +24,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @Configuration
@@ -46,9 +50,15 @@ public class SecurityConfig{
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+        AuthenticationManager authenticationManager = authenticationConfiguration.getAuthenticationManager();
+        return authenticationManager;
     }
 
+    @Bean
+    public RememberMeAuthenticationProvider rememberMeAuthenticationProvider(){
+        RememberMeAuthenticationProvider provider = new RememberMeAuthenticationProvider("secret");
+        return provider;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -79,7 +89,7 @@ public class SecurityConfig{
     }
 
     public LoginFilter loginFilter() throws Exception{
-        LoginFilter loginFilter = new LoginFilter(objectMapper);
+        LoginFilter loginFilter = new LoginFilter(objectMapper, rememberService());
         loginFilter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return loginFilter;
     }

@@ -21,9 +21,11 @@ import java.util.Base64;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final ObjectMapper objectMapper;
+    private final RememberService rememberService;
 
-    public LoginFilter(ObjectMapper objectMapper){
+    public LoginFilter(ObjectMapper objectMapper, RememberService rememberService){
         this.objectMapper = objectMapper;
+        this.rememberService = rememberService;
     }
 
 
@@ -45,6 +47,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
             setDetails(request, token);
             setPostOnly(true);
+            setRememberMeServices(rememberService);
+
 
             Base64.Encoder encoder = Base64.getEncoder();
 
@@ -68,6 +72,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
             Cookie cookie = new Cookie("remember-me", hashStr);
             response.addCookie(cookie);
+
 
             try {
                 Thread.sleep(1000);

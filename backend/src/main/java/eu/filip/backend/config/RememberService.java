@@ -21,12 +21,10 @@ import java.util.Base64;
 
 @AllArgsConstructor
 public class RememberService implements RememberMeServices {
-
     @Autowired
     AuthenticationManager authenticationManager;
 
-    UserService userService;
-
+    private UserService userService;
 
     @Override
     public Authentication autoLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -62,31 +60,31 @@ public class RememberService implements RememberMeServices {
 
         byte[] bytes = encoder.encode(str.getBytes(StandardCharsets.UTF_8));
         String hashStr = new String(bytes);
-        System.out.println("THE HASH IS: " + hashStr);
 
-        /*
-        if(hash != null && hash.getValue().equals("1234")){
+
+
+
+
+        if(hash.getValue().equals(hashStr)){
+            System.out.println("hashes match");
             RememberMeAuthenticationToken rememberMeAuthenticationToken = new RememberMeAuthenticationToken(
-                    hash.getValue(),
-
+                    "secret",
+                    user,
+                    user.getAuthorities()
             );
-            authenticationManager.authenticate(rememberMeAuthenticationToken);
+
+            return authenticationManager.authenticate(rememberMeAuthenticationToken);
         }
-        */
-
-
-
 
         return null;
     }
 
     @Override
     public void loginFail(HttpServletRequest request, HttpServletResponse response) {
-
+        System.out.println("FAIL");
     }
 
     @Override
     public void loginSuccess(HttpServletRequest request, HttpServletResponse response, Authentication successfulAuthentication) {
-
     }
 }
