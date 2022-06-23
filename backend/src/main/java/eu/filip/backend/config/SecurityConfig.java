@@ -54,11 +54,14 @@ public class SecurityConfig{
         return authenticationManager;
     }
 
+    /*
     @Bean
     public RememberMeAuthenticationProvider rememberMeAuthenticationProvider(){
         RememberMeAuthenticationProvider provider = new RememberMeAuthenticationProvider("secret");
         return provider;
     }
+    */
+     
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -80,7 +83,7 @@ public class SecurityConfig{
                 .logout().logoutUrl("/z")
                 .and()
                 .addFilter(loginFilter())
-                .addFilter(rememberFilter())
+                //.addFilter(rememberFilter())
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 

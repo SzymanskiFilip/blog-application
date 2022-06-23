@@ -15,11 +15,13 @@ function LoginPage({checkStatus}){
     const [password, setPassword] = useState("");
     const [spinner, setSpinner] = useState(false);
     const [auth, setAuth] = useState(false);
+    const [agreed, setAgreed] = useState(false);
 
     useEffect(() => {
         checkStatus();
         addKeyListener();
     },[]);
+
     function addKeyListener(){
         const keyboard = window;
         keyboard.addEventListener("keydown", e =>{
@@ -36,7 +38,8 @@ function LoginPage({checkStatus}){
             console.log(`username: ${username}, password: ${password}`);
             const credentials = {
                 username: username,
-                password: password
+                password: password,
+                remember_me: agreed
             };
       
             setTimeout(() => {
@@ -116,6 +119,11 @@ function LoginPage({checkStatus}){
                 onChange={(e) => setPassword(e.target.value)}
                 />
 
+                <div className="flex flex-row items-center justify-center text-sm">
+                    <input type="checkbox" name="" id="" checked={agreed} onChange={(e) => setAgreed(!agreed)}/>
+                    <h1>Remember me</h1>
+                </div>
+                
 
                 <button className="border-black border px-px rounded" onClick={login} id="login">Login</button>
                 <p className="text-center text-xs mt-2">Don't have an account?</p>

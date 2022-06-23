@@ -44,10 +44,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                     authRequest.getUsername(), authRequest.getPassword()
             );
 
-
+            /*
             setDetails(request, token);
             setPostOnly(true);
-            setRememberMeServices(rememberService);
+            //setRememberMeServices(rememberService);
 
 
             Base64.Encoder encoder = Base64.getEncoder();
@@ -58,13 +58,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 messageDigest = MessageDigest.getInstance("MD5");
             } catch (Exception e){}
             //TODO: HEX FROM username:expirateTime:password:key
-            String md5CreationData = "filip:2592000000:1234:secret";
+            String md5CreationData = authRequest.getUsername()+":2592000000:"+authRequest.getPassword()+":secret";
             messageDigest.update(md5CreationData.getBytes());
             byte[] digest = messageDigest.digest();
             String hash = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
 
-            String str = "filip:2592000000:" + hash;
+            String str = authRequest.getUsername()+":2592000000:" + hash;
 
             byte[] bytes = encoder.encode(str.getBytes(StandardCharsets.UTF_8));
             String hashStr = new String(bytes);
@@ -72,6 +72,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
             Cookie cookie = new Cookie("remember-me", hashStr);
             response.addCookie(cookie);
+
+             */
 
 
             try {

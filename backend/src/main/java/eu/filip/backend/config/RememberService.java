@@ -51,12 +51,12 @@ public class RememberService implements RememberMeServices {
             messageDigest = MessageDigest.getInstance("MD5");
         } catch (Exception e){}
         //TODO: HEX FROM username:expirateTime:password:key
-        String md5CreationData = "filip:2592000000:1234:secret";
+        String md5CreationData = user.getUsername()+":2592000000:"+user.getPassword()+":secret";
         messageDigest.update(md5CreationData.getBytes());
         byte[] digest = messageDigest.digest();
         String hashString = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
-        String str = "filip:2592000000:" + hashString;
+        String str = user.getUsername()+":2592000000:" + hashString;
 
         byte[] bytes = encoder.encode(str.getBytes(StandardCharsets.UTF_8));
         String hashStr = new String(bytes);
